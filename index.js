@@ -47,6 +47,9 @@ const bookDataClosure = (function () {
       tr.appendChild(isReservedOn);
       tr.appendChild(deleteBtn);
       tr.id = `${length}_${bookNameInputElement.value}_0`;
+      if (selectFilter === "0") {
+        tr.style.display = "none";
+      }
       bodyElement.appendChild(tr);
       bookNameInputElement.value = "";
       length++;
