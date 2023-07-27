@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link type="text/css" rel="stylesheet" href="./index.css" />
+    <script src="./index.js" defer></script>
+  </head>
+  <body>
+    <div id="layout">
+      <div>
+        <input type="text" id="bookNameInput" />
+        <button id="submitBtn">등록</button>
+      </div>
+      <div>
+        <div>
+          <span>대출 여부</span>
+          <select id="selectFilter">
+            <option selected value="-1"></option>
+            <option value="0">대출중</option>
+            <option value="1">대출 가능</option>
+          </select>
+        </div>
+        <div>
+          <span>정렬</span>
+          <select id="sortFilter">
+            <option selected value="-1"></option>
+            <option value="0">가나다(오름차순)</option>
+            <option value="1">가나다(내림차순)</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <input type="text" />
+        <button>검색</button>
+      </div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>책 이름</th>
+              <th>대출 여부</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
