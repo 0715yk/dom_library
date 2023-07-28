@@ -53,15 +53,33 @@ const bookDataClosure = (function () {
       bookNameInputElement.value = "";
       length++;
     },
+    //   -1, 0, 1
+    //   ""  etc
     setFilter: function (filterNum) {
       for (let i = 0; i < bodyElement.children.length; i++) {
         const trElement = bodyElement.children[i];
         if (filterNum === "-1") {
-          trElement.style.display = "";
+          if (searchInput === "") {
+            trElement.style.display = "";
+          } else {
+            if (trElement.children[1].innerText.includes(searchInput)) {
+              trElement.style.display = "";
+            } else {
+              trElement.style.display = "none";
+            }
+          }
         } else {
           const flag = trElement.id.split("_")[2];
           if (flag !== filterNum) {
-            trElement.style.display = "";
+            if (searchInput === "") {
+              trElement.style.display = "";
+            } else {
+              if (trElement.children[1].innerText.includes(searchInput)) {
+                trElement.style.display = "";
+              } else {
+                trElement.style.display = "none";
+              }
+            }
           } else {
             trElement.style.display = "none";
           }
@@ -117,12 +135,28 @@ const bookDataClosure = (function () {
     searchBook: function () {
       if (searchInput === "") {
         [...bodyElement.children].forEach((trElement) => {
-          trElement.style.display = "";
+          if (selectFilter === "-1") {
+            trElement.style.display = "";
+          } else {
+            const flag = trElement.id.split("_")[2];
+
+            if (flag !== selectFilter) {
+              trElement.style.display = "";
+            } else {
+              trElement.style.display = "none";
+            }
+          }
         });
       } else {
         [...bodyElement.children].forEach((trElement) => {
+          const flag = trElement.id.split("_")[2];
+
           if (trElement.children[1].innerText.includes(searchInput)) {
-            trElement.style.display = "";
+            if (flag !== selectFilter) {
+              trElement.style.display = "";
+            } else {
+              trElement.style.display = "none";
+            }
           } else {
             trElement.style.display = "none";
           }
@@ -154,11 +188,8 @@ sortFilterElement.addEventListener("change", function (e) {
   bookDataClosure.sort();
 });
 
-searchInputElement.addEventListener("change", function (e) {
-  bookDataClosure.setSearchInput(e.target.value);
-});
-
 searchBtnElement.addEventListener("click", function (e) {
+  bookDataClosure.setSearchInput(searchInputElement.value);
   bookDataClosure.searchBook();
 });
 
@@ -166,4 +197,26 @@ cancelSearchBtnElement.addEventListener("click", function (e) {
   bookDataClosure.setSearchInput("");
   searchInputElement.value = "";
   bookDataClosure.searchBook();
+});
+
+// 대출 여부 인터페이스는 check box로 on off 할 수 있음
+// 이 때 대출 가능 or 불가능이 필터로도 컨트롤 할 수 있음.
+// 추가로, 검색 기능을 진행중이라고 해보자.
+// ㄱ을 쳐서 책을 보고 있다가. 대출 여부 check box 하나를 껐다.
+// 그러면 그 때
+
+const dummyData = [
+  "도둑맞은 집중력",
+  "그리스 로마 신화1",
+  "그리스 로마 신화2",
+  "그리스 로마 신화3",
+  "환율도 모르고 경제 공부할 뻔했다",
+  "처음 시작하는 금리 공부",
+  "명탐정 코난 13",
+  "명탐정 코난 15",
+];
+
+dummyData.forEach((el) => {
+  bookNameInputElement.value = el;
+  bookDataClosure.addBook();
 });
