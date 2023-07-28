@@ -1,8 +1,9 @@
-## 순수 VanilaJS를 활용하여 도서관 사서 앱 만들기
+## 📖 순수 VanilaJS를 활용하여 도서관 사서 앱 만들기 📖
 <img width="262" alt="화면 캡처 2023-07-28 162232" src="https://github.com/0715yk/dom_library/assets/68838884/afe20be2-75dc-438b-87d3-d14c68f02cdf">
 
 styling은 신경쓰지 않고, vanilaJS만을 사용해서 CRD 기능을 이용해 도서관 사서 앱을 구현해봤습니다.
-기능
+
+### 기능
 - 도서관 내부에 들어온 책 목록 추가 기능
 - 책 목록 삭제 기능
 - 가나다순(오름차순, 내림차순) 정렬 기능
