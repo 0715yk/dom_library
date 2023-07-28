@@ -3,6 +3,7 @@
 const bookDataClosure = (function () {
   let length = 0;
   let selectFilter = "-1";
+  let sortFilter = "-1";
   const bodyElement = document.querySelector("#tableBody");
 
   return {
@@ -27,7 +28,6 @@ const bookDataClosure = (function () {
         if (selectFilter === "-1" || selectFilter !== arr[2]) {
           tr.style.display = "";
         } else {
-          console.log("heere!");
           tr.style.display = "none";
         }
       });
@@ -55,8 +55,8 @@ const bookDataClosure = (function () {
       length++;
     },
     setFilter: function (filterNum) {
-      for (let i = 0; i < bodyElement.childNodes.length; i++) {
-        const trElement = bodyElement.childNodes[i];
+      for (let i = 0; i < bodyElement.children.length; i++) {
+        const trElement = bodyElement.children[i];
         if (filterNum === "-1") {
           trElement.style.display = "";
         } else {
@@ -72,15 +72,51 @@ const bookDataClosure = (function () {
     setFilterNum: function (num) {
       selectFilter = num;
     },
+    setSortNum: function (num) {
+      sortFilter = num;
+    },
+    sort: function () {
+      if (sortFilter === "0") {
+        [...bodyElement.children]
+          .sort((a, b) => {
+            const bookNameNode1 = a.children[1];
+            const bookNameNode2 = b.children[1];
+            return bookNameNode1.innerText > bookNameNode2.innerText
+              ? 1
+              : bookNameNode1.innerText < bookNameNode2.innerText
+              ? -1
+              : 0;
+          })
+          .forEach((node) => bodyElement.appendChild(node));
+      } else if (sortFilter === "1") {
+        [...bodyElement.children]
+          .sort((a, b) => {
+            const bookNameNode1 = a.children[1];
+            const bookNameNode2 = b.children[1];
+            return bookNameNode1.innerText < bookNameNode2.innerText
+              ? 1
+              : bookNameNode1.innerText > bookNameNode2.innerText
+              ? -1
+              : 0;
+          })
+          .forEach((node) => bodyElement.appendChild(node));
+      }
+    },
   };
 })();
 
 const submitBtnElement = document.querySelector("#submitBtn");
 const selectFilterElement = document.querySelector("#selectFilter");
+const sortFilterElement = document.querySelector("#sortFilter");
 const bookNameInputElement = document.querySelector("#bookNameInput");
 
 submitBtnElement.addEventListener("click", bookDataClosure.addBook);
 selectFilterElement.addEventListener("change", function (e) {
   bookDataClosure.setFilter(e.target.value);
   bookDataClosure.setFilterNum(e.target.value);
+});
+
+sortFilterElement.addEventListener("change", function (e) {
+  bookDataClosure.setSortNum(e.target.value);
+  bookDataClosure.sort();
 });
