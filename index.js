@@ -9,7 +9,6 @@ const bookDataClosure = (function () {
     len: length,
     addBook: function () {
       const tr = document.createElement("tr");
-
       const idNum = document.createElement("td");
       const bookName = document.createElement("td");
       const isReservedOn = document.createElement("td");
@@ -53,8 +52,7 @@ const bookDataClosure = (function () {
       bookNameInputElement.value = "";
       length++;
     },
-    //   -1, 0, 1
-    //   ""  etc
+
     setFilter: function (filterNum) {
       for (let i = 0; i < bodyElement.children.length; i++) {
         const trElement = bodyElement.children[i];
@@ -198,12 +196,6 @@ cancelSearchBtnElement.addEventListener("click", function (e) {
   searchInputElement.value = "";
   bookDataClosure.searchBook();
 });
-
-// 대출 여부 인터페이스는 check box로 on off 할 수 있음
-// 이 때 대출 가능 or 불가능이 필터로도 컨트롤 할 수 있음.
-// 추가로, 검색 기능을 진행중이라고 해보자.
-// ㄱ을 쳐서 책을 보고 있다가. 대출 여부 check box 하나를 껐다.
-// 그러면 그 때
 
 const dummyData = [
   "도둑맞은 집중력",
