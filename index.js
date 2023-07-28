@@ -1,9 +1,8 @@
-// 데이터 생성
-
 const bookDataClosure = (function () {
   let length = 0;
   let selectFilter = "-1";
   let sortFilter = "-1";
+  let searchInput = "";
   const bodyElement = document.querySelector("#tableBody");
 
   return {
@@ -100,13 +99,47 @@ const bookDataClosure = (function () {
               : 0;
           })
           .forEach((node) => bodyElement.appendChild(node));
+      } else {
+        [...bodyElement.children]
+          .sort((a, b) => {
+            const idNumNode1 = a.children[0];
+            const idNumNode2 = b.children[0];
+            return parseInt(idNumNode1.innerText) >
+              parseInt(idNumNode2.innerText)
+              ? 1
+              : parseInt(idNumNode1.innerText) < parseInt(idNumNode2.innerText)
+              ? -1
+              : 0;
+          })
+          .forEach((node) => bodyElement.appendChild(node));
       }
+    },
+    searchBook: function () {
+      if (searchInput === "") {
+        [...bodyElement.children].forEach((trElement) => {
+          trElement.style.display = "";
+        });
+      } else {
+        [...bodyElement.children].forEach((trElement) => {
+          if (trElement.children[1].innerText.includes(searchInput)) {
+            trElement.style.display = "";
+          } else {
+            trElement.style.display = "none";
+          }
+        });
+      }
+    },
+    setSearchInput: function (value) {
+      searchInput = value;
     },
   };
 })();
 
 const submitBtnElement = document.querySelector("#submitBtn");
+const searchBtnElement = document.querySelector("#searchBtn");
+const cancelSearchBtnElement = document.querySelector("#cancelSearchBtn");
 const selectFilterElement = document.querySelector("#selectFilter");
+const searchInputElement = document.querySelector("#searchInput");
 const sortFilterElement = document.querySelector("#sortFilter");
 const bookNameInputElement = document.querySelector("#bookNameInput");
 
@@ -119,4 +152,18 @@ selectFilterElement.addEventListener("change", function (e) {
 sortFilterElement.addEventListener("change", function (e) {
   bookDataClosure.setSortNum(e.target.value);
   bookDataClosure.sort();
+});
+
+searchInputElement.addEventListener("change", function (e) {
+  bookDataClosure.setSearchInput(e.target.value);
+});
+
+searchBtnElement.addEventListener("click", function (e) {
+  bookDataClosure.searchBook();
+});
+
+cancelSearchBtnElement.addEventListener("click", function (e) {
+  bookDataClosure.setSearchInput("");
+  searchInputElement.value = "";
+  bookDataClosure.searchBook();
 });
